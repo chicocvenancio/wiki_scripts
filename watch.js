@@ -64,7 +64,9 @@ mw.loader.using( 'mediawiki.util', function () {
     				
     				// No new watchlist diffs to read, so hide notice
     				$( "#watchlist-update-notice" ).remove();
-					removeBadge();
+					if (favicon) {
+						favicon.reset();
+					}
     			}
     		}
     	);
