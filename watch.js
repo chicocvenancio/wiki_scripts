@@ -1,4 +1,5 @@
 mw.loader.using( 'mediawiki.util', function () {
+	var Favico, favicon;
 	mw.loader.load('https://cdnjs.cloudflare.com/ajax/libs/favico.js/0.3.10/favico.min.js');
 	var showNotice = function () {
  
@@ -20,8 +21,8 @@ mw.loader.using( 'mediawiki.util', function () {
         	)
         	.attr( "id", "watchlist-update-notice" )
         );
-		if (Favico) {
-			var favicon=new Favico({
+		if (Favico != undefined) {
+			var favicon = new Favico({
 				animation:'none'
 			});
 			favicon.badge(1);
