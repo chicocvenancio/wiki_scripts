@@ -1,5 +1,6 @@
+var Favico, favicon;
 mw.loader.using( 'mediawiki.util', function () {
-	var Favico, favicon;
+	
 	mw.loader.load('https://cdnjs.cloudflare.com/ajax/libs/favico.js/0.3.10/favico.min.js');
 	var showNotice = function () {
  
