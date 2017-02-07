@@ -22,10 +22,11 @@ mw.loader.using( 'mediawiki.util', function () {
         	)
         	.attr( "id", "watchlist-update-notice" )
         );
-		if (Favico != undefined) {
+		if (Favico != undefined && favicon === undefined) {
 			favicon = new Favico({
 				animation:'none'
 			});
+		} if (favicon != undefined) {
 			favicon.badge(1);
 		}
 	};
