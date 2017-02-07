@@ -26,6 +26,9 @@ mw.loader.using( 'mediawiki.util', function () {
 				animation:'none'
 			});
 			favicon.badge(1);
+			var removeBadge = function() {
+				favicon.reset();
+			};
 		}
 	};
 	
@@ -60,6 +63,7 @@ mw.loader.using( 'mediawiki.util', function () {
     				
     				// No new watchlist diffs to read, so hide notice
     				$( "#watchlist-update-notice" ).remove();
+					removeBadge();
     			}
     		}
     	);
