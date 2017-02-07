@@ -25,6 +25,7 @@ mw.loader.using( 'mediawiki.util', function () {
 				animation:'none'
 			});
 			favicon.badge(1);
+		}
 	};
 	
 	var updateNotice = function() {
