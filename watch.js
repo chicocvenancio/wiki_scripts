@@ -23,7 +23,7 @@ mw.loader.using( 'mediawiki.util', function () {
         	.attr( "id", "watchlist-update-notice" )
         );
 		if (Favico != undefined) {
-			var favicon = new Favico({
+			favicon = new Favico({
 				animation:'none'
 			});
 			favicon.badge(1);
