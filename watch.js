@@ -1,3 +1,7 @@
+// original by Enterprisey [[:en:User:Enterprisey]]
+// Script to warn of new changes to watched pages.
+// Adds an notice besides the notification icon and adds a badge to the favicon.
+// In chrome the favicon is seen in the tabs. 
 var Favico, favicon;
 mw.loader.using( 'mediawiki.util', function () {
 	
