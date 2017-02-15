@@ -121,9 +121,9 @@ if (mw.config.get('wgPageName') === "Especial:Páginas_vigiadas") {
 				addActionToLinks( $( 'body' ) );
 			} );
 
-			//mw.hook( 'wikipage.diff' ).add( function ( $content ) {
+			mw.hook( 'wikipage.diff' ).add( function ( $content ) {
 				addActionToLinks( $content );
-			//} );
+			} );
 		} , {}, {
 		"cancel": "Cancelar",
 		"ok": "OK",
