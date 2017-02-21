@@ -35,5 +35,5 @@ for page in gen:
         lista += '* ' + page.title(asLink=True) + '\n'
 
 page = pywikibot.Page(site, 'Usuário:Jbribeiro1/Categoria:Santos sem predefinição')
-page.text(lista)
+page.text = lista
 page.save('Lista de páginas na [[:Categoria:Santos]] sem a [[Predefinição:Info/Santo|predefinição adequada]].')
