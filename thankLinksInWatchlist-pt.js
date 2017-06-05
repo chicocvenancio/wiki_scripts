@@ -1,12 +1,10 @@
-if (mw.config.get('wgPageName') === "Especial:Páginas_vigiadas") {
+if (mw.config.get('wgNamespaceNumber') === -1) {
 	mw.loader.using(['ext.thanks',  'jquery.confirmable', 'oojs-ui-core', 'oojs-ui-windows']).then(function () {
 		var regex = /[?&]([^=#]+)=([^&#]*)/g,
 			diffs;
 		
 		mw.config.set( 'thanks-confirmation-required', true );
-		diffs = $('a').filter(function() {
-			return ($(this).text() === "ant" || $(this).text() === "dif");
-		})
+		diffs = $('.mw-changeslist-diff');
 		diffs.each(function (i, diff) {
 			var url = diff.href,
 				match;
