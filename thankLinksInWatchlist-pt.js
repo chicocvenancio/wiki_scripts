@@ -12,7 +12,7 @@ if (mw.config.get('wgNamespaceNumber') === -1) {
 				diff[match[1]] = match[2];
 			}
 			$thankLink = $('<a class="mw-thanks-thank-link" title="Envie um agradecimento para este utilizador">agradecer</a>')
-				.attr('href',"//pt.wikipedia.org/wiki/Especial:Agradecer/" + diff.diff)
+				.attr('href',"//"+ window.location.host + "/wiki/Special:Thanks/" + diff.diff)
 				.attr('data-revision-id', diff.diff);
 			$thankLink.insertAfter(diff);
 			$(document.createTextNode(' | ')).insertAfter(diff);
