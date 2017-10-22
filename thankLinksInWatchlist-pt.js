@@ -1,7 +1,8 @@
-if (mw.config.get('wgNamespaceNumber') === -1) {
+(function (mw) {if (mw.config.get('wgNamespaceNumber') === -1) {
 	mw.loader.using(['ext.thanks',  'jquery.confirmable', 'oojs-ui-core', 'oojs-ui-windows']).then(function () {
 		mw.config.set( 'thanks-confirmation-required', true );
-		function addLinks () {
+        tlw = {}
+		tlw.addLinks = function () {
             var regex = /[?&]([^=#]+)=([^&#]*)/g,
 			diffs;
             diffs = $('.mw-changeslist-diff');
@@ -23,11 +24,12 @@ if (mw.config.get('wgNamespaceNumber') === -1) {
         
             $( document ).ajaxComplete(function(e, j, a) {
                 if (a.url.startsWith('https://pt.wikipedia.org/wiki/Especial:P%C3%A1ginas_vigiadas') && j.status === 200) {
-                    addLinks();
+                    tlw.addLinks();
+                    tlw.addActionToLinks();
                 }
             });
         }
-        addLinks();
+        tlw.addLinks();
         mw.loader.implement("ext.thanks.thankswatchlist", function ( ) {
             var $content = $('#content');
             function reloadThankedState() {
@@ -116,7 +118,6 @@ if (mw.config.get('wgNamespaceNumber') === -1) {
                     } );
                 }
             }
-
             if ( $.isReady ) {
                 // This condition is required for soft-reloads
                 // to also trigger the reloadThankedState
@@ -128,7 +129,8 @@ if (mw.config.get('wgNamespaceNumber') === -1) {
             $( function () {
                 addActionToLinks( $( 'body' ) );
             } );
-
+            
+            tlw.addActionToLinks = addActionToLinks;
             mw.hook( 'wikipage.diff' ).add( function ( $content ) {
                 addActionToLinks( $content );
             } );
@@ -146,3 +148,4 @@ if (mw.config.get('wgNamespaceNumber') === -1) {
         );
     });
 }
+})(mw)
