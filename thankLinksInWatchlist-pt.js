@@ -25,7 +25,7 @@
             $( document ).ajaxComplete(function(e, j, a) {
                 if (a.url.startsWith('https://pt.wikipedia.org/wiki/Especial:P%C3%A1ginas_vigiadas') && j.status === 200) {
                     tlw.addLinks();
-                    tlw.addActionToLinks();
+                    tlw.addActionToLinks($('#content');
                 }
             });
         }
