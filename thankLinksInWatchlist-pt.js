@@ -8,9 +8,9 @@ if (mw.config.get('wgNamespaceNumber') === -1) {
 		diffs.each(function (i, diff) {
 			var url = diff.href,
 				match;
-			// while(match = regex.exec(url)) {
-			// 	diff[match[1]] = match[2];
-			// }
+			while(match = regex.exec(url)) {
+			 	diff[match[1]] = match[2];
+            }
             if (! $(diff).attr('data-thanks-link') || $(diff).attr('data-thanks-link') === 'false') {
                 $thankLink = $('<a class="mw-thanks-thank-link" title="Envie um agradecimento para este utilizador">agradecer</a>')
                     .attr('href',"//"+ window.location.host + "/wiki/Special:Thanks/" + diff.diff)
