@@ -1,3 +1,4 @@
+ $( document ).ready( function () { 
 (function (mw) {if (mw.config.get('wgNamespaceNumber') === -1) {
 	mw.loader.using(['ext.thanks',  'jquery.confirmable', 'oojs-ui-core', 'oojs-ui-windows']).then(function () {
 		mw.config.set( 'thanks-confirmation-required', true );
@@ -5,7 +6,7 @@
 		tlw.addLinks = function () {
             var regex = /[?&]([^=#]+)=([^&#]*)/g,
 			diffs;
-            mw.hook( 'wikipage.content' ).remove(tlw.addLinks);
+            // mw.hook( 'wikipage.content' ).remove(tlw.addLinks);
             diffs = $('.mw-changeslist-diff');
             diffs.each(function (i, diff) {
                 var url = diff.href,
@@ -21,11 +22,10 @@
                     $(document.createTextNode(' | ')).insertAfter(diff);
                     $(diff).attr('data-thanks-link', 'True')
                 }
-            // mw.hook( 'wikipage.content' ).add(tlw.addLinks);
             });
         }
-        mw.hook( 'wikipage.content' ).add(tlw.addActionToLinks);
         tlw.addLinks();
+        mw.hook( 'wikipage.content' ).add(tlw.addLinks);
         mw.loader.implement("ext.thanks.thankswatchlist", function ( ) {
             var $content = $('#content');
             function reloadThankedState() {
@@ -127,6 +127,7 @@
             } );
             
             tlw.addActionToLinks = addActionToLinks;
+            mw.hook( 'wikipage.content' ).add(tlw.addActionToLinks);
             mw.hook( 'wikipage.diff' ).add( function ( $content ) {
                 addActionToLinks( $content );
             } );
@@ -145,3 +146,4 @@
     });
 }
 })(mw)
+ }
