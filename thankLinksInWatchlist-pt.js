@@ -24,8 +24,6 @@
             mw.hook( 'wikipage.content' ).add(tlw.addLinks);
             });
             mw.hook( 'wikipage.content' ).add(tlw.addActionToLinks);
-                }
-            });
         }
         tlw.addLinks();
         mw.loader.implement("ext.thanks.thankswatchlist", function ( ) {
