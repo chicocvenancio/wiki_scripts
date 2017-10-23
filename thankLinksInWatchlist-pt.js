@@ -21,7 +21,7 @@
                     $(document.createTextNode(' | ')).insertAfter(diff);
                     $(diff).attr('data-thanks-link', 'True')
                 }
-            mw.hook( 'wikipage.content' ).add(tlw.addLinks);
+            // mw.hook( 'wikipage.content' ).add(tlw.addLinks);
             });
         }
         mw.hook( 'wikipage.content' ).add(tlw.addActionToLinks);
