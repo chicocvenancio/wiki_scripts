@@ -5,6 +5,7 @@
 		tlw.addLinks = function () {
             var regex = /[?&]([^=#]+)=([^&#]*)/g,
 			diffs;
+            mw.hook( 'wikipage.content' ).remove(tlw.addLinks);
             diffs = $('.mw-changeslist-diff');
             diffs.each(function (i, diff) {
                 var url = diff.href,
@@ -20,12 +21,9 @@
                     $(document.createTextNode(' | ')).insertAfter(diff);
                     $(diff).attr('data-thanks-link', 'True')
                 }
+            mw.hook( 'wikipage.content' ).add(tlw.addLinks);
             });
-        
-            mw.hook( 'wikipage.content' ).add( function (a) {
-                tlw.addLinks();
-                if (tlw.addActionToLinks) {
-                    tlw.addActionToLinks($('#content'));
+            mw.hook( 'wikipage.content' ).add(tlw.addActionToLinks);
                 }
             });
         }
