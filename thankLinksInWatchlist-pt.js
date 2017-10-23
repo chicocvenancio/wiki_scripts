@@ -25,7 +25,6 @@
             mw.hook( 'wikipage.content' ).add( function (a) {
                 tlw.addLinks();
                 tlw.addActionToLinks($('#content'));
-                }
             });
         }
         tlw.addLinks();
