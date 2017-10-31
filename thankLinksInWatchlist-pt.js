@@ -132,7 +132,9 @@
             } );
             
             tlw.addActionToLinks = addActionToLinks;
+            tlw.reloadThankedState = reloadThankedState;
             mw.hook( 'wikipage.content' ).add(tlw.addActionToLinks);
+            mw.hook( 'wikipage.content' ).add(tlw.reloadThankedState);
             mw.hook( 'wikipage.diff' ).add( function ( $content ) {
                 addActionToLinks( $content );
             } );
