@@ -10,14 +10,19 @@
             diffs = $('.mw-changeslist-diff');
             diffs.each(function (i, diff) {
                 var url = diff.href,
-                    match;
+                    match, revid;
                 while(match = regex.exec(url)) {
                     diff[match[1]] = match[2];
                 }
                 if (! $(diff).attr('data-thanks-link') || $(diff).attr('data-thanks-link') === 'false') {
+                    if (diff.diff === 'prev'){
+                        revid = diff.oldid;
+                    } else {
+                        revid = diff.diff;
+                    }
                     $thankLink = $('<a class="mw-thanks-thank-link" title="Envie um agradecimento para este utilizador">agradecer</a>')
-                        .attr('href',"//"+ window.location.host + "/wiki/Special:Thanks/" + diff.diff)
-                        .attr('data-revision-id', diff.diff);
+                        .attr('href',"//"+ window.location.host + "/wiki/Special:Thanks/" + revid)
+                        .attr('data-revision-id', revid);
                     $thankLink.insertAfter(diff);
                     $(document.createTextNode(' | ')).insertAfter(diff);
                     $(diff).attr('data-thanks-link', 'True')
