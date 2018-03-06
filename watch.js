@@ -1,4 +1,6 @@
 // original by Enterprisey [[:en:User:Enterprisey]]
+// https://en.wikipedia.org/w/index.php?oldid=732756722 version this is based
+// https://en.wikipedia.org/w/index.php?title=User:Enterprisey/watchlist-notice.js current
 // Script to warn of new changes to watched pages.
 // Adds an notice besides the notification icon and adds a badge to the favicon.
 // In chrome the favicon is seen in the tabs. 
