@@ -25,7 +25,7 @@
                         .attr('data-revision-id', revid);
                     $thankLink.insertAfter(diff);
                     $(document.createTextNode(' | ')).insertAfter(diff);
-                    $(diff).attr('data-thanks-link', 'True')
+                    $(diff).attr('data-thanks-link', 'True');
                 }
             });
         }
