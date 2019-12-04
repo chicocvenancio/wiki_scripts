@@ -5,12 +5,12 @@ $( document ).ready( function () {
         tlw = {}
         tlw.addLinks = function () {
             var regex = /[?&]([^=#]+)=([^&#]*)/g,
-            diffs;
+            diffs, logs;
             // mw.hook( 'wikipage.content' ).remove(tlw.addLinks);
             diffs = $('.mw-changeslist-diff');
             diffs.each(function (i, diff) {
                 var url = diff.href,
-                    match, revid;
+                    match, revid, $thankLink;
                 while(match = regex.exec(url)) {
                     diff[match[1]] = match[2];
                 }
@@ -28,6 +28,20 @@ $( document ).ready( function () {
                     $(diff).attr('data-thanks-link', 'True');
                 }
             });
+            logs = $('.mw-changeslist-log').not('.mw-collapsible');
+            logs.each(function(i, log) {
+                var logID, talk, $thankLink;
+                if ((!$(log).attr('data-thanks-link') || $(log).attr('data-thanks-link') === 'false') && !log.dataset['mwLogaction'].startsWith('block')) {
+                    logID = log.dataset['mwLogid'];
+                    talk = $(log).find('.mw-usertoollinks-talk');
+                    $thankLink = $('<a class="mw-thanks-thank-link" title="Envie um agradecimento para este utilizador">agradecer</a>')
+                        .attr('href', "//" + window.location.host + "/wiki/Special:Thanks/Log/" + logID)
+                        .attr('data-log-id', logID);
+                    $thankLink.insertBefore(talk)
+                    $(document.createTextNode(' | ')).insertBefore(talk);
+                    $(log).attr('data-thanks-link', 'True');
+                }
+            });
         }
         tlw.addLinks();
         mw.hook( 'wikipage.content' ).add(tlw.addLinks);
@@ -39,7 +53,7 @@ $( document ).ready( function () {
                     if ( mw.thanks.thanked.contains( $thankLink ) ) {
                         $thankLink.before(
                             $( '<span class="mw-thanks-thank-confirmation">' ).text(
-                                mw.msg( 'thanks-thanked', mw.user, $thankLink.data( 'recipient-gender' ) ) )
+                                mw.msg( 'thanks-thanked', mw.user, '' ) )
                         );
                         $thankLink.remove();
                     }
@@ -81,7 +95,7 @@ $( document ).ready( function () {
                     .then(
                         // Success
                         function () {
-                            $thankElement.before( mw.message( 'thanks-thanked', mw.user, $thankLink.data( 'recipient-gender' ) ).escaped() );
+                            $thankElement.before( mw.message( 'thanks-thanked', mw.user, '' ).escaped() );
                             $thankElement.remove();
                             mw.thanks.thanked.push( $thankLink );
                         },
@@ -115,7 +129,7 @@ $( document ).ready( function () {
                                 confirm: mw.msg( 'thanks-confirmation2', mw.user ),
                                 no: mw.msg( 'cancel' ),
                                 noTitle: mw.msg( 'thanks-thank-tooltip-no', mw.user ),
-                                yes: mw.msg( 'thanks-button-thank', mw.user, $thankLink.data( 'recipient-gender' ) ),
+                                yes: mw.msg( 'thanks-button-thank', mw.user, '' ),
                                 yesTitle: mw.msg( 'thanks-thank-tooltip-yes', mw.user )
                             },
                             handler: function ( e ) {
@@ -154,13 +168,34 @@ $( document ).ready( function () {
             } , {}, {
                 "cancel": "Cancelar",
                 "ok": "OK",
-                "thanks-confirmation2": "{{GENDER:$1|Enviar}} um agradecimento p\u00fablico por esta edi\u00e7\u00e3o?",
-                "thanks-error-invalidrevision": "O ID de revis\u00e3o n\u00e3o \u00e9 v\u00e1lido.",
-                "thanks-error-ratelimited": "{{GENDER:$1|Excedeu}} a sua frequ\u00eancia limite de edi\u00e7\u00f5es. Por favor, espere algum tempo e tente novamente.",
-                "thanks-error-undefined": "A a\u00e7\u00e3o de agradecimento falhou (c\u00f3digo de erro: $1). Por favor, tente novamente.",
-                "thanks-thank-tooltip-no": "{{GENDER:$1|Cancelar}} a notifica\u00e7\u00e3o de agradecimento",
-                "thanks-thank-tooltip-yes": "{{GENDER:$1|Enviar}} a notifica\u00e7\u00e3o de agradecimento",
-                "thanks-thanked": "{{GENDER:$1|{{GENDER:$2|agradecimento enviado}}}}"
+                "thanks-desc": "Adiciona ligações para agradecer usuários por suas edições, comentários, etc.",
+                "thanks-thank": "{{GENDER:$1|{{GENDER:$2|agradecer}}}}",
+                "thanks-thanked": "{{GENDER:$1|{{GENDER:$2|agradecido|agradecida}}}}",
+                "thanks-button-thank": "{{GENDER:$1|{{GENDER:$2|Agradecer}}}}",
+                "thanks-button-thanked": "{{GENDER:$1|{{GENDER:$2|Agradecido|Agradecida}}}}",
+                "thanks-button-action-queued": "{{GENDER:$1|{{GENDER:$2|Agradecendo}}}}",
+                "thanks-button-action-cancel": "Cancelar",
+                "thanks-button-action-completed": "{{GENDER:$1|{{GENDER:$2|agradeceu|agradeceu}}}}",
+                "thanks-error-undefined": "O agradecimento falhou (erro: $1). Tente de novamente.",
+                "thanks-error-invalid-log-id": "A entrada do registo não foi encontrada",
+                "thanks-error-invalid-log-type": "O tipo de registo '$1' não consta da lista branca dos tipos de registo permitidos.",
+                "thanks-error-log-deleted": "A entrada de registo solicitada foi eliminada e não se pode dar agradecimentos por ela.",
+                "thanks-error-invalidrevision": "ID de revisão inválido.",
+                "thanks-error-revdeleted": "Não é possível enviar o agradecimento, porque a revisão foi eliminada.",
+                "thanks-error-notitle": "Não foi possível encontrar o título da página",
+                "thanks-error-invalidrecipient": "Não foi encontrado recipiente válido",
+                "thanks-error-invalidrecipient-bot": "Bots não podem receber agradecimentos",
+                "thanks-error-invalidrecipient-self": "Você não pode agradecer a si mesmo",
+                "thanks-error-notloggedin": "Usuários anônimos não podem enviar agradecimentos",
+                "thanks-error-ratelimited": "{{GENDER:$1|Você}} excedeu seu limite. Aguarde um pouco e tente novamente.",
+                "thanks-error-api-params": "Tem de ser fornecido um dos parâmetros 'revid' ou 'logid'",
+                "thanks-thank-tooltip": "{{GENDER:$1|Enviar}} uma notificação de agradecimento a {{GENDER:$2|este usuário|esta usuária}}",
+                "thanks-thank-tooltip-no": "{{GENDER:$1|Cancelar}} a notificação de agradecimento",
+                "thanks-thank-tooltip-yes": "{{GENDER:$1|Enviar}} a notificação de agradecimento",
+                "thanks-confirmation2": "{{GENDER:$1|Enviar}} um agradecimento que será público?",
+                "thanks-thanked-notice": "{{GENDER:$3|Você}} agradeceu a {{GENDER:$2|$1}}.",
+                "thanks": "Enviar agradecimento",
+                "thanks-submit": "Enviar agradecimento",
             }
         );
     });
